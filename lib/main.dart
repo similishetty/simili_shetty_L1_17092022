@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:simili_shetty_l1_17092022/screens/movie_details_screen.dart';
+// @dart=2.9 --no-sound-null-safety
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  const MovieDetailsScreen(),
     );
   }
 }
