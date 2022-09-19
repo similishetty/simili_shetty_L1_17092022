@@ -78,7 +78,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> implements On
              const SizedBox(height: 10,)
 ,           Row(
                mainAxisAlignment: MainAxisAlignment.center,
-               children: AppData.imgList.asMap().entries.map((entry) {
+               children: ticketDetails.ticketDetails.asMap().entries.map((entry) {
                  return GestureDetector(
                    onTap: () => _controller.animateToPage(entry.key),
                    child: Container(

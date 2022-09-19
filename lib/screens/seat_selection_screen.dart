@@ -297,7 +297,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
 
                       ]
                     ),
-                    const TableRow(
+                     TableRow(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
@@ -305,7 +305,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
                         ),
                         Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
-                          child: Text("VIP Section",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                          child: Text("Seats",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
@@ -313,7 +313,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
                         ),
                         Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
-                          child: Text("Seats 9,10",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                          child: Text(getSeats(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
                         ),
 
                       ]
@@ -351,5 +351,18 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
   @override
   onBackPressed() {
     Navigator.of(context).pop();
+  }
+
+  String getSeats() {
+    String seats ="";
+    if(selectedSeats.isNotEmpty){
+      for(var item in selectedSeats){
+        seats = seats + item.keys.first+"-"+item.values.first+",";
+      }
+    }
+    if(seats.isNotEmpty){
+      seats = seats.substring(0,seats.length-1);
+    }
+    return seats;
   }
 }

@@ -287,6 +287,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
 
   @override
   onBackPressed() {
-    exit(0);
+   Navigator.of(context).pop();
   }
 }

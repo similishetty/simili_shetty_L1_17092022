@@ -100,10 +100,26 @@ class AppData {
     }
   };
 
-  static List<String> imgList = [
-    "assets/images/movie_image_details1.png",
-    "assets/images/movie_image_details2.png",
-    "assets/images/movie_image_details3.png"
+  static List<String> nowPlaying = [
+    "assets/images/movie1.png",
+    "assets/images/movie2.png",
+    "assets/images/movie3.png",
+    "assets/images/movie4.png",
+    "assets/images/movie5.png"
+  ];
+  static List<String> comingSoon = [
+    "assets/images/movie6.png",
+    "assets/images/movie7.png",
+    "assets/images/movie8.png",
+        "assets/images/movie9.png",
+        "assets/images/movie1.png"
+  ];
+  static List<String> topMovies = [
+    "assets/images/movie2.png",
+    "assets/images/movie6.png",
+    "assets/images/movie5.png",
+        "assets/images/movie9.png",
+        "assets/images/movie3.png"
   ];
 
   static Map<String, dynamic> ticketDetails = {
