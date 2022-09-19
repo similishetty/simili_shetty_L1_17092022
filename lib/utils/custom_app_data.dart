@@ -1,5 +1,7 @@
-class AppData {
+import 'package:flutter/cupertino.dart';
+import 'package:simili_shetty_l1_17092022/utils/app_colors.dart';
 
+class AppData {
   static Map<String, dynamic> seatData = {
     "vip_seats": {
       "total_count": 2,
@@ -12,7 +14,7 @@ class AppData {
             "Reserved",
             "Available",
             "Reserved",
-              "Reserved",
+            "Reserved",
             "Available"
           ]
         },
@@ -98,20 +100,71 @@ class AppData {
     }
   };
 
+  static List<String> imgList = [
+    "assets/images/movie_image_details1.png",
+    "assets/images/movie_image_details2.png",
+    "assets/images/movie_image_details3.png"
+  ];
+
+  static Map<String, dynamic> ticketDetails = {
+    "ticket_details": [
+      {
+        "movie_path": "assets/images/movie_image_details1.png",
+        "date": "April 23",
+        "time": "6 p.m.",
+        "row": "2",
+        "seats": "1, 2"
+      },
+      {
+        "movie_path": "assets/images/movie_image_details2.png",
+        "date": "June 19",
+        "time": "8 p.m.",
+        "row": "1",
+        "seats": "1, 2"
+      },
+      {
+        "movie_path": "assets/images/movie_image_details3.png",
+        "date": "October 8",
+        "time": "7 p.m.",
+        "row": "2",
+        "seats": "9, 10"
+      }
+      ]
+  };
+
 
 }
 
 class SeatStatus {
   static const String available = "Available";
-  static  const String reserved = "Reserved";
+  static const String reserved = "Reserved";
   static const String selected = "Selected";
-
 }
 
-
-class Utils{
-static bool isMobileLayout(smallestDimension) {
-  final useMobileLayout = smallestDimension < 600;
-  return useMobileLayout;
-}
+class Utils {
+  static bool isMobileLayout(smallestDimension) {
+    final useMobileLayout = smallestDimension < 600;
+    return useMobileLayout;
+  }
+  static Widget appBarButtonBg(IconData iconData){
+    return Container(
+        width: 40,
+        height: 30,
+        decoration: const BoxDecoration(
+          color: AppColors.iconBgColor,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.gradientColor,
+              blurRadius: 1.0,
+              spreadRadius: 1,
+              offset: Offset(
+                -2, //left
+                -2, // upward
+              ),
+            )
+          ],
+        ),
+        child:  Icon(iconData,size: 23,));
+  }
 }
