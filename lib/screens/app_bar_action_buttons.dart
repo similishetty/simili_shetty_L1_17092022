@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:simili_shetty_l1_17092022/utils/custom_app_data.dart';
 
-import '../utils/app_colors.dart';
 import '../utils/listeners.dart';
 
 class MenuButton extends StatelessWidget {
@@ -30,8 +29,8 @@ class Calendar extends StatelessWidget {
 }
 
 class CustomBackButton extends StatelessWidget {
-    OnBackListeners onBackListeners;
-   CustomBackButton({Key? key,required this.onBackListeners}) : super(key: key);
+   final OnBackListeners onBackListeners;
+   const CustomBackButton({Key? key,required this.onBackListeners}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(

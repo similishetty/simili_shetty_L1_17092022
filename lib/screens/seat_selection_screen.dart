@@ -1,14 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:simili_shetty_l1_17092022/model/seat_selection.dart';
 import 'package:simili_shetty_l1_17092022/screens/ticket_details_screen.dart';
 import 'package:simili_shetty_l1_17092022/utils/app_colors.dart';
 import 'package:simili_shetty_l1_17092022/utils/custom_app_data.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../utils/listeners.dart';
 import 'app_bar_action_buttons.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
-  const SeatSelectionScreen({Key? key}) : super(key: key);
+  final String selectedTime;
+  final String selectedDate;
+   const SeatSelectionScreen({Key? key,required this.selectedDate,required this.selectedTime }) : super(key: key);
 
   @override
   _SeatSelectionScreenState createState() => _SeatSelectionScreenState();
@@ -35,7 +39,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: AppBar(
-        leading: CustomBackButton(onBackListeners: this),
+        leading:kIsWeb?Container():CustomBackButton(onBackListeners: this),
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: const Text(
@@ -48,30 +52,33 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
         ],
       ),
       bottomSheet: selectedSeats.isNotEmpty?ticketSummary():const SizedBox(width: 0,height: 0,),
-      body: SingleChildScrollView(
-        child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 30, right: 30, top: 50),
-                child: Image.asset(
-                  "assets/images/movie_seat_line.png",
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.contain,
+      body: WillPopScope(
+        onWillPop:  () async => true,
+        child: SingleChildScrollView(
+          child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 30, right: 30, top: 50),
+                  child: Image.asset(
+                    "assets/images/movie_seat_line.png",
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              vipSections(),
-              const SizedBox(
-                height: 30,
-              ),
-              nonVipSections(),
-              const SizedBox(
-                height: 20,
-              ),
-              statusDescription()
-            ]),
+                const SizedBox(
+                  height: 30,
+                ),
+                vipSections(),
+                const SizedBox(
+                  height: 30,
+                ),
+                nonVipSections(),
+                const SizedBox(
+                  height: 20,
+                ),
+                statusDescription()
+              ]),
+        ),
       ),
     );
   }
@@ -273,42 +280,54 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
             children: [
               Expanded(
                 flex: 2,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(0.15),
+                    1: FlexColumnWidth(0.50),
+                    2: FlexColumnWidth(0.10),
+                    3: FlexColumnWidth(0.30),
+                  },
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(Icons.calendar_today_rounded,color: AppColors.white,size: 20,),
-                        Text("April 23, 2020",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
-                        Icon(Icons.circle,color: AppColors.white,size: 10,),
-                        Text("6 PM",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                    TableRow(
+                      children: [
+                        const Icon(Icons.calendar_today_rounded,color: AppColors.white,size: 20,),
+                        Text("September ${widget.selectedDate}, 2020",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                        const Icon(Icons.circle,color: AppColors.white,size: 10,),
+                        Text("${widget.selectedTime} PM",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
 
-                      ],
+                      ]
                     ),
-                    const SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(Icons.event_seat,color: AppColors.white,size: 20,),
-                        Text("April 23, 2020",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
-                        Icon(Icons.circle,color: AppColors.white,size: 10,),
-                        Text("6 PM",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                    const TableRow(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
+                          child: Icon(Icons.event_seat,color: AppColors.white,size: 20,),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
+                          child: Text("VIP Section",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
+                          child: Icon(Icons.circle,color: AppColors.white,size: 10,),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
+                          child: Text("Seats 9,10",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                        ),
 
-                      ],
+                      ]
                     ),
-                    const SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Icon(Icons.add_shopping_cart_outlined,color: AppColors.white,size: 20,),
-                        Text("April 23, 2020",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
-                        Icon(Icons.circle,color: AppColors.white,size: 10,),
-                        Text("6 PM",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
-                      ],
+                    TableRow(
+                      children: [
+                        const Icon(Icons.add_shopping_cart_outlined,color: AppColors.white,size: 20,),
+                        Text("Total: \$ ${totalAmount.toString()}",style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                        Container(),Container(),
+                      ]
                     )
-                ],),
+                  ],
+                )
+                ,
               ),
                Expanded(child: ElevatedButton(
                 child: const Text("Buy",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),

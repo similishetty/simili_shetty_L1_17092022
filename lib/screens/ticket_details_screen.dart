@@ -4,6 +4,7 @@ import 'package:simili_shetty_l1_17092022/model/ticket_details.dart';
 import 'package:simili_shetty_l1_17092022/screens/app_bar_action_buttons.dart';
 import 'package:simili_shetty_l1_17092022/utils/custom_app_data.dart';
 import 'package:simili_shetty_l1_17092022/utils/listeners.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../utils/app_colors.dart';
 
@@ -30,7 +31,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> implements On
     return Scaffold(
          backgroundColor: AppColors.primary,
         appBar: AppBar(
-          leading: CustomBackButton(onBackListeners: this),
+          leading: kIsWeb?Container():CustomBackButton(onBackListeners: this),
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: const Text(
@@ -42,58 +43,61 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> implements On
           ],
           elevation: 0.0,
         ),
-        body: SingleChildScrollView(child: Column(children:
-         [
-          const Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Text("Once you buy a movie ticket simply scan the barcode to acces to your movie.",
-            textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: AppColors.white),),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CarouselSlider.builder(
-              itemCount: ticketDetails.ticketDetails.length,
-              itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  sliderItem(ticketDetails.ticketDetails[itemIndex]),
-              options: CarouselOptions(
-                height: 450,
-                 viewportFraction: 0.7,
-                  initialPage: 0,
-                 enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index;
-                    });
-                  }
+        body: WillPopScope(
+        onWillPop:  () async => true,
+          child: SingleChildScrollView(child: Column(children:
+           [
+            const Padding(
+              padding: EdgeInsets.all(30.0),
+              child: Text("Once you buy a movie ticket simply scan the barcode to acces to your movie.",
+              textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: AppColors.white),),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CarouselSlider.builder(
+                itemCount: ticketDetails.ticketDetails.length,
+                itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    sliderItem(ticketDetails.ticketDetails[itemIndex]),
+                options: CarouselOptions(
+                  height: 450,
+                   viewportFraction: 0.7,
+                    initialPage: 0,
+                   enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _current = index;
+                      });
+                    }
+
+                ),
 
               ),
-
             ),
-          ),
-           const SizedBox(height: 10,)
+             const SizedBox(height: 10,)
 ,           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: AppData.imgList.asMap().entries.map((entry) {
-               return GestureDetector(
-                 onTap: () => _controller.animateToPage(entry.key),
-                 child: Container(
-                   width: 10.0,
-                   height: 10.0,
-                   margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                   decoration: BoxDecoration(
-                       shape: BoxShape.circle,
-                       color:AppColors.indicatorColor.withOpacity(_current == entry.key ? 0.9 : 0.3)),
-                 ),
-               );
-             }).toList(),
-           ),
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: AppData.imgList.asMap().entries.map((entry) {
+                 return GestureDetector(
+                   onTap: () => _controller.animateToPage(entry.key),
+                   child: Container(
+                     width: 10.0,
+                     height: 10.0,
+                     margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                     decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         color:AppColors.indicatorColor.withOpacity(_current == entry.key ? 0.9 : 0.3)),
+                   ),
+                 );
+               }).toList(),
+             ),
 
 
 
 
-         ],),)
+           ],),),
+        )
     );
 
   }

@@ -7,6 +7,8 @@ import 'package:simili_shetty_l1_17092022/screens/app_bar_action_buttons.dart';
 import 'package:simili_shetty_l1_17092022/screens/seat_selection_screen.dart';
 import 'package:simili_shetty_l1_17092022/utils/app_colors.dart';
 import 'package:simili_shetty_l1_17092022/utils/listeners.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 
 class MovieDetailsScreen extends StatefulWidget {
@@ -20,6 +22,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
   late DateTime lastDayOfMonth;
   int currentDateIndex = 0;
   int currentTimeIndex = 0;
+  late String selectedDate;
+  late String selectedTime;
 
   PageController dateViewController =
       PageController(initialPage: 0,);
@@ -35,6 +39,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
     timeViewController = PageController(initialPage: 5, viewportFraction: 0.25);
     currentDateIndex = now.day - 1;
     currentTimeIndex = 5;
+    selectedDate =  (now.day).toString();
+    selectedTime = (currentTimeIndex+1).toString();
   }
 
   @override
@@ -64,86 +70,89 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
         Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              leading: CustomBackButton(onBackListeners: this,),
+               leading: kIsWeb?Container():CustomBackButton(onBackListeners: this,),
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               actions: const [
                 MenuButton()
               ],
             ),
-            body: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment : MainAxisAlignment.end,
-                    children: [
-                      ShowUpList(
-                          direction: Direction.horizontal,
-                          delayBetween: const Duration(milliseconds: 400),
-                          children: const [
-                        Text("Doctor Strange",style: TextStyle(fontSize: 20,color: AppColors.white,fontWeight: FontWeight.w700),),
-                        Padding(
-                          padding: EdgeInsets.only(top:8.0),
-                          child: Text("in the Multiverse of Madness",style: TextStyle(fontSize: 17,color: AppColors.white,fontWeight: FontWeight.w400),),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                              "Dr. Stephen Strange casts a forbidden spell that opens the doorway to the multiverse, including alternate versions of himself, whose threat to humanity is too great for the combined forces of Strange, Wong, and Wanda Maximoff.",
-                            style: TextStyle(fontSize: 15,color: AppColors.white,fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-
-                      ]),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+            body:  WillPopScope(
+              onWillPop:  () async => true,
+              child: Column(
+                children: [
+                  Expanded(
                     child: Column(
-                      //crossAxisAlignment: CrossAxisAlignment.stretch,
-                      //mainAxisAlignment : MainAxisAlignment.center,
+                      mainAxisAlignment : MainAxisAlignment.end,
                       children: [
-                        const Text("Select date and time",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 17,color: AppColors.white,fontWeight: FontWeight.w500),),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        selectDateWidget(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        selectTimeWidget(),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 350,
-                            height: 60,
-                            decoration:
-                             BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                                gradient:  const LinearGradient(colors: [AppColors.reservationLightGradient, AppColors.reservationDarkGradient])),
-
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(primary: Colors.transparent, shadowColor: Colors.transparent),
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const SeatSelectionScreen()));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(17.0),
-                                  child: Text("Reservation",
-                            style: TextStyle(fontWeight: FontWeight.w500,fontSize: 17,color: AppColors.white),),
-                                )),
+                        ShowUpList(
+                            direction: Direction.horizontal,
+                            delayBetween: const Duration(milliseconds: 400),
+                            children: const [
+                          Text("Doctor Strange",style: TextStyle(fontSize: 20,color: AppColors.white,fontWeight: FontWeight.w700),),
+                          Padding(
+                            padding: EdgeInsets.only(top:8.0),
+                            child: Text("in the Multiverse of Madness",style: TextStyle(fontSize: 17,color: AppColors.white,fontWeight: FontWeight.w400),),
                           ),
-                        )
+                          Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Text(
+                                "Dr. Stephen Strange casts a forbidden spell that opens the doorway to the multiverse, including alternate versions of himself, whose threat to humanity is too great for the combined forces of Strange, Wong, and Wanda Maximoff.",
+                              style: TextStyle(fontSize: 15,color: AppColors.white,fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                        ]),
                       ],
                     ),
                   ),
-                )
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        //crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //mainAxisAlignment : MainAxisAlignment.center,
+                        children: [
+                          const Text("Select date and time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 17,color: AppColors.white,fontWeight: FontWeight.w500),),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          selectDateWidget(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          selectTimeWidget(),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Container(
+                              width: 350,
+                              height: 60,
+                              decoration:
+                               BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                  gradient:  const LinearGradient(colors: [AppColors.reservationLightGradient, AppColors.reservationDarkGradient])),
 
-              ],
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(primary: Colors.transparent, shadowColor: Colors.transparent),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>  SeatSelectionScreen(selectedDate : selectedDate,selectedTime:selectedTime)));
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(17.0),
+                                    child: Text("Reservation",
+                              style: TextStyle(fontWeight: FontWeight.w500,fontSize: 17,color: AppColors.white),),
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
             )
 
             )
@@ -162,6 +171,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
           onPageChanged: (index) {
             setState(() {
               currentDateIndex = index;
+              selectedDate = (index + 1).toString();
             });
           },
           itemBuilder: (context, index) {
@@ -230,6 +240,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> implements OnBa
           onPageChanged: (index) {
             setState(() {
               currentTimeIndex = index;
+              selectedTime = (index + 1).toString();
             });
           },
           itemBuilder: (context, index) {
