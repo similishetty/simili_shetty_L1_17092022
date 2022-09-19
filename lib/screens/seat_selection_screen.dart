@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:simili_shetty_l1_17092022/model/seat_selection.dart';
-import 'package:simili_shetty_l1_17092022/screens/ticket_details_screen.dart';
+import 'package:simili_shetty_l1_17092022/screens/bottom_navigation_screen.dart';
 import 'package:simili_shetty_l1_17092022/utils/app_colors.dart';
 import 'package:simili_shetty_l1_17092022/utils/custom_app_data.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -299,21 +299,21 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
                     ),
                      TableRow(
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
                           child: Icon(Icons.event_seat,color: AppColors.white,size: 20,),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top:8.0,bottom: 8.0),
                           child: Text("Seats",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
+                        const Padding(
+                          padding:  EdgeInsets.only(top:8.0,bottom: 8.0),
                           child: Icon(Icons.circle,color: AppColors.white,size: 10,),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top:8.0,bottom: 8.0),
-                          child: Text(getSeats(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
+                          padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
+                          child: Text(getSeats(),style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: AppColors.white),),
                         ),
 
                       ]
@@ -337,7 +337,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen>  implements O
                   shadowColor: AppColors.gradientColor,
                   primary: AppColors.iconBgColor, // <-- Button color<-- Splash color
                 ), onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const TicketDetailsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const BottomNavigationScreen(selectedIndex: 2)));
                },
               ))
             ],

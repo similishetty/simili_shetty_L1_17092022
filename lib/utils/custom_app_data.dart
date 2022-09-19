@@ -162,10 +162,10 @@ class Utils {
     final useMobileLayout = smallestDimension < 600;
     return useMobileLayout;
   }
-  static Widget appBarButtonBg(IconData iconData){
+  static Widget appBarButtonBg(IconData iconData,double iconSize){
     return Container(
-        width: 40,
-        height: 30,
+        width: 45,
+        height: 40,
         decoration: const BoxDecoration(
           color: AppColors.iconBgColor,
           shape: BoxShape.circle,
@@ -181,6 +181,6 @@ class Utils {
             )
           ],
         ),
-        child:  Icon(iconData,size: 23,));
+        child:  Icon(iconData,size: iconSize));
   }
 }

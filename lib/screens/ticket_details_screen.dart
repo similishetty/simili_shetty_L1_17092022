@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:simili_shetty_l1_17092022/model/ticket_details.dart';
 import 'package:simili_shetty_l1_17092022/screens/app_bar_action_buttons.dart';
+import 'package:simili_shetty_l1_17092022/screens/bottom_navigation_screen.dart';
 import 'package:simili_shetty_l1_17092022/utils/custom_app_data.dart';
 import 'package:simili_shetty_l1_17092022/utils/listeners.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -191,7 +192,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> implements On
 
   @override
   onBackPressed() {
-  Navigator.of(context).pop();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const BottomNavigationScreen(selectedIndex: 0),), (route) => false);
+
   }
 }
 

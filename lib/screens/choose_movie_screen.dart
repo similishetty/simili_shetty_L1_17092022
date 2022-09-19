@@ -30,7 +30,7 @@ class _ChooseMovieScreenState extends State<ChooseMovieScreen> {
            Padding(
              padding: const EdgeInsets.all(15.0),
              child: TextFormField(
-               style: TextStyle(color: AppColors.white),
+               style: const TextStyle(color: AppColors.white),
                decoration: InputDecoration(
                    isDense: true,
                    contentPadding: const EdgeInsets.fromLTRB(15, 15, 10, 0),

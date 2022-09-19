@@ -12,7 +12,7 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Utils.appBarButtonBg(Icons.more_vert)
+      child: Utils.appBarButtonBg(Icons.more_vert,23)
     );
   }
 }
@@ -23,7 +23,7 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Utils.appBarButtonBg(Icons.calendar_today_rounded)
+        child: Utils.appBarButtonBg(Icons.calendar_today_rounded,23)
     );
   }
 }
@@ -39,7 +39,7 @@ class CustomBackButton extends StatelessWidget {
       },
       child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Utils.appBarButtonBg(Platform.isIOS?Icons.arrow_back_ios:Icons.arrow_back)
+          child: Utils.appBarButtonBg(Platform.isIOS?Icons.arrow_back_ios:Icons.arrow_back,23)
       ),
     );
   }

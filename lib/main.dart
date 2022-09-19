@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simili_shetty_l1_17092022/screens/choose_movie_screen.dart';
+import 'package:simili_shetty_l1_17092022/screens/bottom_navigation_screen.dart';
 // @dart=2.9 --no-sound-null-safety
 
 void main() {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  const ChooseMovieScreen(),
+      home:  const BottomNavigationScreen(selectedIndex: 0,),
     );
   }
 }
