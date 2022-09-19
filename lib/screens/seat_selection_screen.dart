@@ -33,6 +33,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       backgroundColor: AppColors.primary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        centerTitle: true,
         title: const Text(
           "Choose Seats",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
@@ -40,97 +41,104 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         elevation: 0.0,
       ),
       bottomSheet: selectedSeats.isNotEmpty?ticketSummary():const SizedBox(width: 0,height: 0,),
-      body: Column(
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 50),
-              child: Image.asset(
-                "assets/images/movie_seat_line.png",
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.contain,
+      body: SingleChildScrollView(
+        child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 30, right: 30, top: 50),
+                child: Image.asset(
+                  "assets/images/movie_seat_line.png",
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            vipSections(),
-            const SizedBox(
-              height: 30,
-            ),
-            nonVipSections(),
-            const SizedBox(
-              height: 20,
-            ),
-            statusDescription()
-          ]),
+              const SizedBox(
+                height: 30,
+              ),
+              vipSections(),
+              const SizedBox(
+                height: 30,
+              ),
+              nonVipSections(),
+              const SizedBox(
+                height: 20,
+              ),
+              statusDescription()
+            ]),
+      ),
     );
   }
 
   Widget vipSections() {
-    return Column(
-      children: List.generate(
-          seatSelection.vipSeats.totalCount,
-          (index) => Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                            seatSelection.vipSeats.items[index].total ~/ 2,
-                            (item) => buildSeats(
-                                status: seatSelection
-                                    .vipSeats.items[index].status[item],
-                                seat: (item + 1).toString(),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Column(
+        children: List.generate(
+            seatSelection.vipSeats.totalCount,
+            (index) => Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              seatSelection.vipSeats.items[index].total ~/ 2,
+                              (item) => buildSeats(
+                                  status: seatSelection
+                                      .vipSeats.items[index].status[item],
+                                  seat: (item + 1).toString(),
+                                  isSelected: seatSelection
+                                      .vipSeats.items[index].isSelected[item],
+                                  onTap: () {
+                                    onItemSelectedVip(
+                                        rowIndex: index, seatIndex: item);
+                                  })),
+                        ),
+                        Row(children: [
+                          for (int i =
+                                  (seatSelection.vipSeats.items[index].total ~/
+                                      2);
+                              i < seatSelection.vipSeats.items[index].total;
+                              i++)
+                            buildSeats(
+                                status:
+                                    seatSelection.vipSeats.items[index].status[i],
+                                seat: (i + 1).toString(),
                                 isSelected: seatSelection
-                                    .vipSeats.items[index].isSelected[item],
+                                    .vipSeats.items[index].isSelected[i],
                                 onTap: () {
                                   onItemSelectedVip(
-                                      rowIndex: index, seatIndex: item);
-                                })),
-                      ),
-                      Row(children: [
-                        for (int i =
-                                (seatSelection.vipSeats.items[index].total ~/
-                                    2);
-                            i < seatSelection.vipSeats.items[index].total;
-                            i++)
-                          buildSeats(
-                              status:
-                                  seatSelection.vipSeats.items[index].status[i],
-                              seat: (i + 1).toString(),
-                              isSelected: seatSelection
-                                  .vipSeats.items[index].isSelected[i],
-                              onTap: () {
-                                onItemSelectedVip(
-                                    rowIndex: index, seatIndex: i);
-                              })
-                      ])
-                    ]),
-              )),
+                                      rowIndex: index, seatIndex: i);
+                                })
+                        ])
+                      ]),
+                )),
+      ),
     );
   }
 
   Widget nonVipSections() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: List.generate(
-          seatSelection.nonVipSeats.totalCount,
-          (index) => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                  seatSelection.nonVipSeats.items[index].total,
-                  (item) => buildSeats(
-                      status:
-                          seatSelection.nonVipSeats.items[index].status[item],
-                      seat: (item + 1).toString(),
-                      isSelected: seatSelection
-                          .nonVipSeats.items[index].isSelected[item],
-                      onTap: () {
-                        onItemSelectedNonVip(rowIndex: index, seatIndex: item);
-                      })))),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: List.generate(
+            seatSelection.nonVipSeats.totalCount,
+            (index) => Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                    seatSelection.nonVipSeats.items[index].total,
+                    (item) => buildSeats(
+                        status:
+                            seatSelection.nonVipSeats.items[index].status[item],
+                        seat: (item + 1).toString(),
+                        isSelected: seatSelection
+                            .nonVipSeats.items[index].isSelected[item],
+                        onTap: () {
+                          onItemSelectedNonVip(rowIndex: index, seatIndex: item);
+                        })))),
+      ),
     );
   }
 
